@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Gallery</h2>
+<form method="get" class="mb-3">
+    <input type="text" name="search" placeholder="Search..." value="{{ search }}" class="form-control mb-2">
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+<div class="row">
+    {% for img in images %}
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <img src="{{ url_for('static', filename='uploads/' + img[1]) }}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">{{ img[2] }}</h5>
+                <p class="card-text">{{ img[3] }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
