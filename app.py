@@ -25,12 +25,15 @@ PASSWORD = "demo"
 
 @app.route("/", methods=["GET", "POST"])
 def login():
+    if "user" in session:
+        return redirect(url_for("gallery"))  # redirect logged-in users to gallery
+
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         if username == USERNAME and password == PASSWORD:
             session["user"] = username
-            return redirect(url_for("upload"))
+            return redirect(url_for("gallery"))
         else:
             return "Invalid credentials"
     return render_template("login.html")
@@ -39,6 +42,9 @@ def login():
 def upload():
     if "user" not in session:
         return redirect(url_for("login"))
+
+    message = None
+
     if request.method == "POST":
         file = request.files["image"]
         title = request.form.get("title")
@@ -52,8 +58,9 @@ def upload():
                       (file.filename, title, tags))
             conn.commit()
             conn.close()
-            return redirect(url_for("gallery"))
-    return render_template("upload.html")
+            message = "Image uploaded successfully!"
+
+    return render_template("upload.html", message=message)
 
 @app.route("/gallery", methods=["GET"])
 def gallery():
@@ -74,6 +81,13 @@ def gallery():
 def logout():
     session.pop("user", None)
     return redirect(url_for("login"))
+
+@app.route("/set_language", methods=["POST"])
+def set_language():
+    current_lang = session.get("lang", "en")
+    session["lang"] = "fr" if current_lang == "en" else "en"
+    return redirect(request.referrer or url_for("login"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)

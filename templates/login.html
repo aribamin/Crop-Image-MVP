@@ -1,9 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    <input type="text" name="username" placeholder="Username" class="form-control mb-2">
-    <input type="password" name="password" placeholder="Password" class="form-control mb-2">
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+
+{% set lang = session.get('lang', 'en') %}
+
+<!-- Center login card -->
+<div class="d-flex justify-content-center align-items-center" style="height: calc(100vh - 120px);">
+    <div class="card shadow-sm" style="width: 500px;">
+        <div class="card-header text-white text-center" style="background-color: #002D62;">
+            <h5>{{ "Crop Data Portal" if lang=='en' else "Portail de données sur les cultures" }}</h5>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info" role="alert">
+                {{ "Welcome to the NRC-ACRD Crop Data Portal. This portal allows secure access to crop research images."
+                if lang=='en' else
+                "Bienvenue sur le portail de données sur les cultures du CNRC-ACRD. Ce portail permet un accès sécurisé aux images de recherche sur les cultures." }}
+            </div>
+
+            <form method="post">
+                <div class="mb-3">
+                    <label class="form-label">{{ "Username" if lang=='en' else "Nom d'utilisateur" }}</label>
+                    <input type="text" name="username" class="form-control" placeholder="{{ 'Enter your username' if lang=='en' else 'Entrez votre nom d’utilisateur' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ "Password" if lang=='en' else "Mot de passe" }}</label>
+                    <input type="password" name="password" class="form-control" placeholder="{{ 'Enter your password' if lang=='en' else 'Entrez votre mot de passe' }}" required>
+                </div>
+                <button type="submit" class="btn w-100" style="background-color: #002D62; color: white;">
+                    {{ "Login" if lang=='en' else "Connexion" }}
+                </button>
+            </form>
+
+            <hr>
+            <p class="small mb-1 text-center">
+                {% if lang=='en' %}
+                    Forgot your credentials? Contact the system administrator: <a href="mailto:nrc-acrd@canada.ca">nrc-acrd@canada.ca</a>
+                {% else %}
+                    Mot de passe oublié ? Contactez l'administrateur système : <a href="mailto:nrc-acrd@canada.ca">nrc-acrd@canada.ca</a>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

@@ -1,10 +1,82 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Upload Image</h2>
-<form method="post" enctype="multipart/form-data">
-    <input type="file" name="image" class="form-control mb-2" required>
-    <input type="text" name="title" placeholder="Title" class="form-control mb-2" required>
-    <input type="text" name="tags" placeholder="Tags (comma-separated)" class="form-control mb-2">
-    <button type="submit" class="btn btn-success">Upload</button>
-</form>
+
+{% set lang = session.get('lang', 'en') %}
+
+<div class="d-flex justify-content-center mt-4">
+    <!-- Form and Preview Container -->
+    <div class="d-flex card shadow-sm p-3" style="width: 800px;">
+        
+        <!-- Upload Form -->
+        <div class="flex-grow-1 me-3">
+            <div class="card-header text-white mb-3" style="background-color: #002D62;">
+                <h5 class="mb-0">{{ "Upload Crop Image" if lang=='en' else "Téléverser une image de culture" }}</h5>
+            </div>
+
+            <p class="text-muted">
+                {% if lang == 'en' %}
+                    Please upload crop images for research purposes. Add a descriptive title and relevant tags to help other researchers find your data.
+                {% else %}
+                    Veuillez téléverser des images de cultures à des fins de recherche. Ajoutez un titre descriptif et des étiquettes pertinentes pour aider les autres chercheurs à trouver vos données.
+                {% endif %}
+            </p>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">{{ "Select Image" if lang=='en' else "Sélectionner une image" }}</label>
+                    <input type="file" name="image" class="form-control" accept="image/*" id="imageInput" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">{{ "Title" if lang=='en' else "Titre" }}</label>
+                    <input type="text" name="title" placeholder="{{ 'Enter image title' if lang=='en' else 'Entrez le titre de l’image' }}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">{{ "Tags" if lang=='en' else "Étiquettes" }}</label>
+                    <input type="text" name="tags" placeholder="{{ 'Comma-separated tags' if lang=='en' else 'Étiquettes séparées par des virgules' }}" class="form-control">
+                </div>
+
+                <button type="submit" class="btn mt-2" style="background-color: #002D62; color: white;">
+                    {{ "Upload" if lang=='en' else "Téléverser" }}
+                </button>
+            </form>
+        </div>
+
+        <!-- Image Preview -->
+        <div style="width: 250px;">
+            <h6 class="text-primary">{{ "Preview" if lang=='en' else "Aperçu" }}</h6>
+            <div class="border rounded p-2" style="height: 300px; display:flex; align-items:center; justify-content:center; background-color:#f8f9fa;">
+                <img id="preview" src="#" alt="{{ 'Image Preview' if lang=='en' else 'Aperçu de l’image' }}" style="max-width:100%; max-height:100%; display:none;">
+                <span id="placeholder" class="text-muted">{{ "No image selected" if lang=='en' else "Aucune image sélectionnée" }}</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- JS for live preview -->
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const placeholder = document.getElementById('placeholder');
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.addEventListener('load', function() {
+                preview.src = this.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            });
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = '#';
+            preview.style.display = 'none';
+            placeholder.style.display = '';
+        }
+    });
+</script>
+
 {% endblock %}
