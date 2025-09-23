@@ -40,16 +40,21 @@ This project simulates a **Government of Canada–style research portal** for ma
 
 ## ⚙️ Setup & Installation
 
-1. Clone this repository:
-
 ```bash
+1. Clone this repository:
 git clone https://github.com/aribamin/crop_mvp.git
 cd crop_mvp
 
+2. Install dependencies:
 pip install -r requirements.txt
 
+3. Run the Flask app:
 python app.py
 
+4. Open your browser at:
+http://127.0.0.1:5000
+
+5. Login with demo credentials:
 Username: demo
 Password: demo
 ```
