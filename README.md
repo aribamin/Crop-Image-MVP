@@ -16,6 +16,14 @@ This project simulates a **Government of Canada–style research portal** for ma
 - Browse a **clean, responsive gallery**.
 - Experience a simple **login system** for authentication.
 
+![Login Page](https://raw.githubusercontent.com/aribamin/crop_mvp/main/login.jpg)
+
+![Upload Page](https://raw.githubusercontent.com/aribamin/crop_mvp/main/upload.jpg)
+
+![Gallery Page](https://raw.githubusercontent.com/aribamin/crop_mvp/main/gallery.jpg)
+
+![Gallery Page 2](https://raw.githubusercontent.com/aribamin/crop_mvp/main/gallery2.jpg)
+
 ---
 
 ## 🎯 Features
