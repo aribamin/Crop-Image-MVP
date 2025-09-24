@@ -22,7 +22,7 @@ This project simulates a **Government of Canada–style research portal** for ma
 
 ![Upload Page](https://raw.githubusercontent.com/aribamin/crop_mvp/main/upload2.jpg)
 
-![Gallery Page](https://raw.githubusercontent.com/aribamin/crop_mvp/main/gallery.jpg)
+![Gallery Page](https://raw.githubusercontent.com/aribamin/crop_mvp/main/gallery1.jpg)
 
 ![Gallery Page 2](https://raw.githubusercontent.com/aribamin/crop_mvp/main/gallery2.jpg)
 
