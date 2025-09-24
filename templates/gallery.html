@@ -64,9 +64,16 @@
                     {{ description[:100] }}{% if description|length > 100 %}...{% endif %}
                 </p>
                 {% if description|length > 100 %}
-                    <a href="javascript:void(0);" class="read-more-link" style="font-size:0.8rem; color:#004080;">
+                    <a href="javascript:void(0);" class="read-more-link me-2" style="font-size:0.8rem; color:#004080;">
                         {{ 'Read More' if lang=='en' else 'Lire la suite' }}
                     </a>
+                    <form method="post" action="{{ url_for('delete_image', image_id=img[0]) }}" 
+                          onsubmit="return confirm('{{ 'Are you sure you want to delete this image?' if lang=='en' else 'Êtes-vous sûr de vouloir supprimer cette image ?' }}');"
+                          style="display:inline;">
+                        <button type="submit" class="btn btn-sm" style="background-color:#8B0000; color:white; border:none;">
+                            {{ 'Delete' if lang=='en' else 'Supprimer' }}
+                        </button>
+                    </form>
                     <p class="small mb-0 full-description d-none" style="color:#002D62;">
                         {{ description }}
                     </p>
@@ -94,7 +101,7 @@
 <script>
 document.querySelectorAll('.read-more-link').forEach(link => {
     link.addEventListener('click', () => {
-        const fullDesc = link.nextElementSibling;
+        const fullDesc = link.nextElementSibling.nextElementSibling; // next sibling of delete form
         const preview = link.previousElementSibling;
         if (fullDesc.classList.contains('d-none')) {
             fullDesc.classList.remove('d-none');

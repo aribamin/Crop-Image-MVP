@@ -88,6 +88,25 @@ def set_language():
     session["lang"] = "fr" if current_lang == "en" else "en"
     return redirect(request.referrer or url_for("login"))
 
+@app.route("/delete/<int:image_id>", methods=["POST"])
+def delete_image(image_id):
+    if "user" not in session:
+        return redirect(url_for("login"))
+    
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT filename FROM images WHERE id=?", (image_id,))
+    row = c.fetchone()
+    if row:
+        filepath = os.path.join(UPLOAD_FOLDER, row[0])
+        if os.path.exists(filepath):
+            os.remove(filepath)
+        c.execute("DELETE FROM images WHERE id=?", (image_id,))
+        conn.commit()
+    conn.close()
+    
+    return redirect(url_for("gallery"))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
