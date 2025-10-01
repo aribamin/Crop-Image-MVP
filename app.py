@@ -14,7 +14,8 @@ c.execute('''CREATE TABLE IF NOT EXISTS images (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 filename TEXT,
                 title TEXT,
-                tags TEXT
+                tags TEXT,
+                description TEXT
             )''')
 conn.commit()
 conn.close()
@@ -26,7 +27,7 @@ PASSWORD = "demo"
 @app.route("/", methods=["GET", "POST"])
 def login():
     if "user" in session:
-        return redirect(url_for("gallery"))  # redirect logged-in users to gallery
+        return redirect(url_for("gallery"))
 
     if request.method == "POST":
         username = request.form.get("username")
@@ -49,13 +50,16 @@ def upload():
         file = request.files["image"]
         title = request.form.get("title")
         tags = request.form.get("tags")
+        description = request.form.get("description")  # NEW
         if file:
             filepath = os.path.join(UPLOAD_FOLDER, file.filename)
             file.save(filepath)
             conn = sqlite3.connect("database.db")
             c = conn.cursor()
-            c.execute("INSERT INTO images (filename, title, tags) VALUES (?, ?, ?)",
-                      (file.filename, title, tags))
+            c.execute(
+                "INSERT INTO images (filename, title, tags, description) VALUES (?, ?, ?, ?)",
+                (file.filename, title, tags, description)
+            )
             conn.commit()
             conn.close()
             message = "Image uploaded successfully!"
@@ -106,7 +110,6 @@ def delete_image(image_id):
     conn.close()
     
     return redirect(url_for("gallery"))
-
 
 if __name__ == "__main__":
     app.run(debug=True)

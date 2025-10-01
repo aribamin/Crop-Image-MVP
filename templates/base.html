@@ -11,46 +11,24 @@
             min-height: 100vh;
             background-color: #f8f9fa;
         }
-        main {
-            flex: 1;
-        }
-        header {
-            background-color: #002D62;
-            color: white;
-            padding: 1rem;
-        }
-        header img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        .nav-link {
-            color: white !important;
-            font-weight: 500;
-        }
-        .card {
-            border-radius: 10px;
-        }
-        footer {
-            background: #f1f1f1;
-            padding: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
+        main { flex: 1; }
+        header { background-color: #002D62; color: white; padding: 1rem; }
+        header img { height: 40px; margin-right: 10px; }
+        .nav-link { color: white !important; font-weight: 500; }
+        .card { border-radius: 10px; }
+        footer { background: #f1f1f1; padding: 1rem; text-align: center; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-<!-- Header -->
 <header class="d-flex align-items-center">
     <img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Flag_of_Canada.svg" alt="Canada Flag">
     <h5 class="m-0">Government of Canada | Gouvernement du Canada</h5>
 </header>
 
-<!-- Navbar with Language Toggle -->
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #004080;">
     <div class="container d-flex justify-content-between align-items-center">
         <a class="navbar-brand" href="{{ url_for('gallery') }}">Crop Data Portal</a>
-        
         <div class="d-flex align-items-center">
             {% if session.get('user') %}
                 <div class="d-flex ms-auto">
@@ -59,8 +37,6 @@
                     <a class="nav-link px-3" href="{{ url_for('logout') }}">Logout</a>
                 </div>
             {% endif %}
-
-            <!-- Language Toggle Button -->
             <form method="post" action="{{ url_for('set_language') }}" class="ms-3">
                 <button type="submit" class="btn btn-outline-light btn-sm">
                     {% if session.get('lang') == 'fr' %}English{% else %}Français{% endif %}
@@ -70,12 +46,10 @@
     </div>
 </nav>
 
-<!-- Main Content Area -->
 <main class="container mt-4">
     {% block content %}{% endblock %}
 </main>
 
-<!-- Footer -->
 <footer>
     <p>&copy; 2025 National Research Council Canada | Conseil national de recherches Canada</p>
 </footer>

@@ -4,10 +4,8 @@
 {% set lang = session.get('lang', 'en') %}
 
 <div class="d-flex justify-content-center mt-4">
-    <!-- Form and Preview Container -->
     <div class="d-flex card shadow-sm p-3" style="width: 800px;">
         
-        <!-- Upload Form -->
         <div class="flex-grow-1 me-3">
             <div class="card-header text-white mb-3" style="background-color: #002D62;">
                 <h5 class="mb-0">{{ "Upload Crop Image" if lang=='en' else "Téléverser une image de culture" }}</h5>
@@ -15,9 +13,9 @@
 
             <p class="text-muted">
                 {% if lang == 'en' %}
-                    Please upload crop images for research purposes. Add a descriptive title and relevant tags to help other researchers find your data.
+                    Upload crop images for research. Add a descriptive title, tags, and description.
                 {% else %}
-                    Veuillez téléverser des images de cultures à des fins de recherche. Ajoutez un titre descriptif et des étiquettes pertinentes pour aider les autres chercheurs à trouver vos données.
+                    Téléversez des images de cultures pour la recherche. Ajoutez un titre, des étiquettes et une description.
                 {% endif %}
             </p>
 
@@ -37,13 +35,17 @@
                     <input type="text" name="tags" placeholder="{{ 'Comma-separated tags' if lang=='en' else 'Étiquettes séparées par des virgules' }}" class="form-control">
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">{{ "Description" if lang=='en' else "Description" }}</label>
+                    <textarea name="description" class="form-control" rows="4" placeholder="{{ 'Enter image description' if lang=='en' else 'Entrez la description de l’image' }}"></textarea>
+                </div>
+
                 <button type="submit" class="btn mt-2" style="background-color: #002D62; color: white;">
                     {{ "Upload" if lang=='en' else "Téléverser" }}
                 </button>
             </form>
         </div>
 
-        <!-- Image Preview -->
         <div style="width: 250px;">
             <h6 class="text-primary">{{ "Preview" if lang=='en' else "Aperçu" }}</h6>
             <div class="border rounded p-2" style="height: 300px; display:flex; align-items:center; justify-content:center; background-color:#f8f9fa;">
@@ -55,28 +57,27 @@
     </div>
 </div>
 
-<!-- JS for live preview -->
 <script>
-    const imageInput = document.getElementById('imageInput');
-    const preview = document.getElementById('preview');
-    const placeholder = document.getElementById('placeholder');
+const imageInput = document.getElementById('imageInput');
+const preview = document.getElementById('preview');
+const placeholder = document.getElementById('placeholder');
 
-    imageInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.addEventListener('load', function() {
-                preview.src = this.result;
-                preview.style.display = 'block';
-                placeholder.style.display = 'none';
-            });
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = '#';
-            preview.style.display = 'none';
-            placeholder.style.display = '';
-        }
-    });
+imageInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.addEventListener('load', function() {
+            preview.src = this.result;
+            preview.style.display = 'block';
+            placeholder.style.display = 'none';
+        });
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = '#';
+        preview.style.display = 'none';
+        placeholder.style.display = '';
+    }
+});
 </script>
 
 {% endblock %}
